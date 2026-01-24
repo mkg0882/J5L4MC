@@ -1,0 +1,26 @@
+!SESSION 2026-01-06 19:22:19.812 -----------------------------------------------
+eclipse.buildId=4.32.0.20240606-1231
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product -data /home/mkgraham/mcdev/j5launcher/j5launcher
+
+!ENTRY ch.qos.logback.classic 1 0 2026-01-06 19:22:21.561
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-01-06 19:22:22.622
+!MESSAGE Logback config file: /home/mkgraham/mcdev/j5launcher/j5launcher/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.6.1.20240411-1122.xml
+!SESSION 2026-01-06 23:41:03.772 -----------------------------------------------
+eclipse.buildId=4.32.0.20240606-1231
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product -data /home/mkgraham/mcdev/j5launcher/j5launcher
+
+!ENTRY ch.qos.logback.classic 1 0 2026-01-06 23:41:05.904
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-01-06 23:41:06.858
+!MESSAGE Logback config file: /home/mkgraham/mcdev/j5launcher/j5launcher/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.6.1.20240411-1122.xml

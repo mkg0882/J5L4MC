@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.2.jar" sourcepath="lib/commons-codec-1.2-src.jar"/>
+	<classpathentry kind="lib" path="lib/commons-httpclient-3.1.jar" sourcepath="lib/commons-httpclient-3.1-sources.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.0.4.jar" sourcepath="lib/commons-logging-1.0.4-sources.jar"/>
+	<classpathentry kind="lib" path="lib/bcprov-jdk15to18-1.82.jar" sourcepath="lib/bcprov-jdk15to18-1.82-sources.jar"/>
+	<classpathentry kind="lib" path="lib/bctls-jdk15to18-1.82.jar" sourcepath="lib/bctls-jdk15to18-1.82-sources.jar"/>
+	<classpathentry kind="lib" path="lib/bcutil-jdk15to18-1.82.jar" sourcepath="lib/bcutil-jdk15to18-1.82-sources.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.4.jar" sourcepath="lib/gson-2.4-sources.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
