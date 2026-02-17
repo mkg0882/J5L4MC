@@ -17,8 +17,6 @@ import java.util.TimeZone;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.plaf.ComboBoxUI;
-
 import org.apache.commons.httpclient.protocol.Protocol;
 import org.mkg0882.j5launcher.json.ConfigStore;
 import org.mkg0882.j5launcher.json.InstanceEntry;
@@ -348,7 +346,8 @@ public class Launcher extends JFrame
 		System.out.println("Selected instance " + lc.instance);
 		Thread t = new Thread(lc, "minecraftcient");
 		t.start();
-		return;
+		f.dispose();
+        Thread.currentThread().interrupt();
 	}
 	
 	public static void populateInstanceList(String entriespath) {

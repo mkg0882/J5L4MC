@@ -20,6 +20,10 @@ public class LaunchClient implements Runnable{
 	static String instfolder = "";
 	static String jarfile = "minecraft.jar";
 	static String version = "";
+	static String resversion = "";
+	static String launchstring = "";
+	static ArrayList<String> liblist = new ArrayList<String>();
+	public static String mainClass;
 	
 	public void run() {
 		String mchomedir = Paths.basepath();
@@ -47,7 +51,7 @@ public class LaunchClient implements Runnable{
 					jarfile = ie.entry.jarfile;
 				}
 				version = ie.entry.version.split(" ")[0];
-				InstanceSetup.create(version, instfolder);
+				liblist = InstanceSetup.create(version, instfolder);
 			}
 		}
 		ArrayList<String> cmdline = new ArrayList<String>();
@@ -55,25 +59,58 @@ public class LaunchClient implements Runnable{
 		cmdline.add("-Xms512m");
 		cmdline.add("-Xmx1g"); 
 		cmdline.add("-Djava.library.path="+mchomedir+System.getProperty("file.separator")
-										  +instfolder+System.getProperty("file.separator")
-										  +"bin"+System.getProperty("file.separator")+"natives");
-		cmdline.add("-Dhttp.proxyHost=betacraft.uk");
+										  +"common"+System.getProperty("file.separator")+"natives");
+		//cmdline.add("-Dhttp.proxyHost=betacraft.uk");
         cmdline.add("-Djava.util.Arrays.useLegacyMergeSort=true");
-        cmdline.add("-Dhttp.nonProxyHosts=\"api.betacraft.uk|files.betacraft.uk|checkip.amazonaws.com\"");
-        cmdline.add("-Dhttp.proxyPort="+port);
+        //cmdline.add("-Dhttp.nonProxyHosts=\"api.betacraft.uk|files.betacraft.uk|checkip.amazonaws.com\"");
+        //cmdline.add("-Dhttp.proxyPort="+port);
         cmdline.add("-Duser.home="+mchomedir+System.getProperty("file.separator")+instfolder);
 		cmdline.add("-cp");
-		cmdline.add(jarfile + System.getProperty("path.separator")
-					+"lwjgl.jar" + System.getProperty("path.separator")
-					+"lwjgl_util.jar" + System.getProperty("path.separator")
-					+ "jinput.jar");
-		cmdline.add("net.minecraft.client.Minecraft");
-		cmdline.add(MSAuthRoutine.mcprofilename);
-		cmdline.add(MSAuthRoutine.mcaccesstoken);
+		String extralibs = "";
+		for (String name : liblist) {
+			extralibs += (mchomedir+Paths.filesep+"common"+Paths.filesep+name+System.getProperty("path.separator"));
+		}
+		File guava = new File(mchomedir+Paths.filesep+"common"+Paths.filesep+"guava.jar");
+		if (guava.exists()){
+			extralibs += guava.getAbsolutePath()+System.getProperty("path.separator");
+		}
+		File argo = new File(mchomedir+Paths.filesep+"common"+Paths.filesep+"argo.jar");
+		if (argo.exists()){
+			extralibs += argo.getAbsolutePath()+System.getProperty("path.separator");
+		}
+		File cio = new File(mchomedir+Paths.filesep+"common"+Paths.filesep+"commons-io.jar");
+		if (cio.exists()){
+			extralibs += cio.getAbsolutePath()+System.getProperty("path.separator");
+		}
+		cmdline.add(extralibs 
+					+mchomedir+Paths.filesep+"versions"+Paths.filesep+version+Paths.filesep+jarfile + System.getProperty("path.separator")
+					+mchomedir+Paths.filesep+"common"+Paths.filesep+"lwjgl.jar"+System.getProperty("path.separator")
+					+mchomedir+Paths.filesep+"common"+Paths.filesep+"lwjgl_util.jar"+System.getProperty("path.separator")
+					+mchomedir+Paths.filesep+"common"+Paths.filesep+"jinput.jar"+System.getProperty("path.separator")
+					+mchomedir+Paths.filesep+"common"+Paths.filesep+"jopt-simple.jar"+System.getProperty("path.separator")
+					+mchomedir+Paths.filesep+"common"+Paths.filesep+"gson.jar"+System.getProperty("path.separator")
+					+mchomedir+Paths.filesep+"versions"+Paths.filesep+version+Paths.filesep+"launchwrapper.jar");
+		//cmdline.add("net.minecraft.launchwrapper.Launch");
+		cmdline.add(mainClass);
+		//cmdline.add(MSAuthRoutine.mcprofilename);
+		//cmdline.add(MSAuthRoutine.mcaccesstoken);
+		//"${auth_player_name} ${auth_session} --gameDir ${game_directory} --assetsDir ${game_assets}"
+		String launchargs = launchstring;
+		launchargs = launchargs.replace("${auth_player_name}", MSAuthRoutine.mcprofilename);
+		launchargs = launchargs.replace("${auth_session}", MSAuthRoutine.mcaccesstoken);
+		launchargs = launchargs.replace("${game_directory}", mchomedir+System.getProperty("file.separator")+instfolder);
+		launchargs = launchargs.replace("${game_assets}", mchomedir+System.getProperty("file.separator")+"assets"+ (resversion.contains("legacy") ? (Paths.filesep + "virtual") : ""));
+		if (launchargs.contains("${version_name}")){
+			launchargs = launchargs.replace("${version_name}", "\"" + resversion + "\"");
+		}
+		//cmdline.add(launchargs);
+		String[] arguments = launchargs.split(" ");
+		for (String arg : arguments) {
+			cmdline.add(arg);
+		}
 		ProcessBuilder p = new ProcessBuilder(cmdline);
 		p.redirectErrorStream(true);
-		p.directory(new File(mchomedir + System.getProperty("file.separator")
-						+ instfolder + System.getProperty("file.separator")+"bin"));
+		p.directory(new File(mchomedir + Paths.filesep + instfolder));
 		try {
 			System.out.println("Running command: " + p.command());
 			InputStream i = p.start().getInputStream();

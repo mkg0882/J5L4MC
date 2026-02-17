@@ -1,7 +1,7 @@
 package org.mkg0882.j5launcher.json;
 
 public class AssetIndexInfo {
-	String id;
+	public String id;
 	String sha1;
 	int size;
 	int totalSize;

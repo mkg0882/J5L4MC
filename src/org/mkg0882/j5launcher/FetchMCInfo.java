@@ -34,7 +34,7 @@ public class FetchMCInfo {
 		vm.latest = response.latest;
 		ArrayList<VersionEntry> ve = new ArrayList<VersionEntry>();
 		for (VersionEntry entry : response.versions) {
-			if (entry.id.contains("1.5.2")) {
+			if (entry.id.contains("1.6.4")) {
 				flag = true;
 			}
 			if (flag == false) {

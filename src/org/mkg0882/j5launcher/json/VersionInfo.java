@@ -8,8 +8,8 @@ public class VersionInfo {
 	String id;
 	JavaVerInfo javaVersion;
 	public LibEntry[] libraries;
-	String mainClass;
-	String minecraftArguments;
+	public String mainClass;
+	public String minecraftArguments;
 	int minimumLauncherVersion;
 	String releaseTime;
 	String time;

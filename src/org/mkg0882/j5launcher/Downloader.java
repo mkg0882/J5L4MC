@@ -21,7 +21,7 @@ public class Downloader {
 		try {
 			File f = new File(path);
 			boolean skip = false;
-			if (f.exists()) {
+			if (f.exists() && (sha1 != null)) {
 				@SuppressWarnings("resource")
 				final FileInputStream fi = new FileInputStream(f);
 				FileChannel fc = fi.getChannel();
@@ -63,6 +63,21 @@ public class Downloader {
 				fo.flush();
 				fo.getFD().sync();
 				fo.close();
+				if (f.exists() && (sha1 != null)) {
+					@SuppressWarnings("resource")
+					final FileInputStream fi = new FileInputStream(f);
+					FileChannel fc = fi.getChannel();
+					MessageDigest md = MessageDigest.getInstance("SHA");
+					byte[] data = new byte[(int) fc.size()];
+					fi.read(data);
+					System.out.println("Comparing...");
+					System.out.println(sha1);
+					System.out.println(Hex.toHexString(md.digest(data)));
+					if (Hex.toHexString(md.digest(data)).contentEquals(sha1)) {
+						skip = true;
+					}
+					fi.close();
+				}
 			}
 			System.out.println("\nDone!");
 		} catch (IOException e1) {
