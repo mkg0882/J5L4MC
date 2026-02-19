@@ -76,7 +76,7 @@ public class GetResources {
 			 if (LaunchClient.resversion.contentEquals("legacy")) {
 				 Downloader.getUrl(assetUrl, resourceDir + Paths.filesep + "objects" + Paths.filesep + hash.substring(0, 2) + Paths.filesep + hash, hash);
 				 File fs = new File(resourceDir + Paths.filesep + "objects" + Paths.filesep + hash.substring(0, 2) + Paths.filesep + hash);
-				 File fd = new File(resourceDir + Paths.filesep + "virtual" + Paths.filesep + fileName);
+				 File fd = new File(resourceDir + Paths.filesep + "virtual" + Paths.filesep + "legacy" + Paths.filesep + fileName);
 				 fd.getParentFile().mkdirs();
 				 try {
 					 BufferedInputStream in = new BufferedInputStream(new FileInputStream(fs));

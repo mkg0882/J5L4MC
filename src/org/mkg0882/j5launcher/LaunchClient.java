@@ -99,7 +99,7 @@ public class LaunchClient implements Runnable{
 		launchargs = launchargs.replace("${auth_player_name}", MSAuthRoutine.mcprofilename);
 		launchargs = launchargs.replace("${auth_session}", MSAuthRoutine.mcaccesstoken);
 		launchargs = launchargs.replace("${game_directory}", mchomedir+System.getProperty("file.separator")+instfolder);
-		launchargs = launchargs.replace("${game_assets}", mchomedir+System.getProperty("file.separator")+"assets"+ (resversion.contains("legacy") ? (Paths.filesep + "virtual") : ""));
+		launchargs = launchargs.replace("${game_assets}", mchomedir+System.getProperty("file.separator")+"assets"+ (resversion.contains("legacy") ? (Paths.filesep + "virtual" + Paths.filesep + "legacy") : ""));
 		if (launchargs.contains("${version_name}")){
 			launchargs = launchargs.replace("${version_name}", "\"" + resversion + "\"");
 		}
