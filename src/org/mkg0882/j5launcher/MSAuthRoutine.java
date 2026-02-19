@@ -156,15 +156,18 @@ public class MSAuthRoutine {
 		mcaccesstoken = mcar.access_token;
 		System.out.println("System time is: " + System.currentTimeMillis());
 		Calendar ecal = Calendar.getInstance();
-		ecal.setTimeInMillis(System.currentTimeMillis());
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
-			Date expiry = sdf.parse(xbar.NotAfter);
-			ecal.setTime(expiry);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//System.out.println("XBAR NotAfter: " + xbar.NotAfter);
+		//System.out.println("XBLR: NotAfter:" + xblr.NotAfter);
+		//System.out.println("MCAR Expires In: " + mcar.expires_in);
+		ecal.setTimeInMillis(System.currentTimeMillis()+(Integer.parseInt(mcar.expires_in)*1000));
+//		try {
+//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+//			Date expiry = sdf.parse(mcar.expires_in);
+//			ecal.setTime(expiry);
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		mcexpirytime=ecal.getTimeInMillis();
 		
 		mcpr = HttpRequest.getMinecraftProfile(mcaccesstoken);

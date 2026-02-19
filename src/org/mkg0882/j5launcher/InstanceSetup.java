@@ -191,9 +191,9 @@ public class InstanceSetup {
 					}
 					LaunchClient.resversion = vi.assetIndex.id;
 					if (vi.assetIndex.id.contentEquals("legacy")) {
-						GetResources.download(resourceIndexUrl, Paths.basepath()+Paths.filesep+Paths.filesep+"assets");
+						GetResources.download(resourceIndexUrl, Paths.basepath()+Paths.filesep+"assets");
 					} else if (vi.assetIndex.id.contentEquals("pre-1.6")) {
-						GetResources.download(resourceIndexUrl, Paths.basepath()+Paths.filesep+Paths.filesep+"resources");
+						GetResources.download(resourceIndexUrl, instancedir+Paths.filesep+"resources");
 					}
 					if (launchwrapperUrl.length()>0) {
 						System.out.println(launchwrapperUrl);
@@ -206,12 +206,18 @@ public class InstanceSetup {
 						liblist.add(name);
 						Downloader.getUrl(entry.getKey(), Paths.basepath()+Paths.filesep+"common"+Paths.filesep+name, entry.getValue());
 					}
-					System.out.println(cioUrl);
-					Downloader.getUrl(cioUrl, Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"commons-io.jar", cioSha1);
-					System.out.println(argoUrl);
-					Downloader.getUrl(argoUrl, Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"argo.jar", argoSha1);
-					System.out.println(guavaUrl);
-					Downloader.getUrl(guavaUrl, Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"guava.jar", guavaSha1);
+					if (cioUrl.length()>0) {
+						System.out.println(cioUrl);
+						Downloader.getUrl(cioUrl, Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"commons-io.jar", cioSha1);
+					}
+					if (argoUrl.length()>0) {
+						System.out.println(argoUrl);
+						Downloader.getUrl(argoUrl, Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"argo.jar", argoSha1);
+					}
+					if (guavaUrl.length()>0) {
+						System.out.println(guavaUrl);
+						Downloader.getUrl(guavaUrl, Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"guava.jar", guavaSha1);
+					}
 					System.out.println(jinputUrl);
 					Downloader.getUrl(jinputUrl, Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"jinput.jar", jinputSha1);
 					System.out.println(lwjglUrl);

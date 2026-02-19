@@ -59,18 +59,18 @@ public class Launcher extends JFrame
 		playbtn.setEnabled(false);
 		profname.setText("Please wait...");
 		ConfigStore config = new ConfigStore();
-		String testdate = "2025-12-11T21:41:04.0176564Z";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-		try {
-			Date dt = sdf.parse(testdate);
-			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-			cal.setTime(dt);
-			System.out.println(cal.getTimeInMillis());
-		} catch (ParseException e) {
+		//String testdate = "2025-12-11T21:41:04.0176564Z";
+		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		//sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+		//try {
+			//Date dt = sdf.parse(testdate);
+			//Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+			//cal.setTime(dt);
+			//System.out.println(cal.getTimeInMillis());
+		//} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//	e.printStackTrace();
+		//}
 		try {
 			configread = new FileReader(Paths.configpath);
 			Gson gson = new Gson();
