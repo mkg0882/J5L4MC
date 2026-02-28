@@ -124,7 +124,7 @@ public class Launcher extends JFrame
 	public void showLauncher() {
 		f.setSize(850, 500);
 		f.add(basepanel);
-		f.setTitle("J5 Launcher for Minecraft");
+		f.setTitle("J5L4MC");
 		f.addWindowListener(this);
 		
 		GridLayout single = new GridLayout();
