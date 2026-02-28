@@ -22,8 +22,7 @@ import com.google.gson.JsonObject;
 
 public class MSAuthRoutine {
 	
-	//static String appID = "3844adc1-2092-49a4-9bc3-804aaf2d3161";
-	static String appID = "8075fa74-4091-4356-a0b8-a7c118ef121c";
+	static String appID = "3844adc1-2092-49a4-9bc3-804aaf2d3161";
 	static String devicecode = null;
 	static String user_code = null;
 	public static String msrefreshtoken = null;
