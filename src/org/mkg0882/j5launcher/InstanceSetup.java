@@ -190,11 +190,11 @@ public class InstanceSetup {
 						}
 					}
 					LaunchClient.resversion = vi.assetIndex.id;
-					if (vi.assetIndex.id.contentEquals("legacy")) {
-						GetResources.download(resourceIndexUrl, Paths.basepath()+Paths.filesep+"assets");
-					} else if (vi.assetIndex.id.contentEquals("pre-1.6")) {
-						GetResources.download(resourceIndexUrl, instancedir+Paths.filesep+"resources");
-					}
+					//if (vi.assetIndex.id.contentEquals("legacy")) {
+						GetResources.download(resourceIndexUrl, Paths.basepath()+Paths.filesep+"assets", instancedir.getAbsolutePath());
+					//} else if (vi.assetIndex.id.contentEquals("pre-1.6")) {
+					//	GetResources.download(resourceIndexUrl, instancedir+Paths.filesep+"resources");
+					//}
 					if (launchwrapperUrl.length()>0) {
 						System.out.println(launchwrapperUrl);
 						Downloader.getUrl(launchwrapperUrl, Paths.basepath()+Paths.filesep+"versions"+Paths.filesep+version+Paths.filesep+"launchwrapper.jar", launchwrapperSha1);

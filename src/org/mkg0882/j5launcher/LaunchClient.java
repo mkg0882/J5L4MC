@@ -60,10 +60,10 @@ public class LaunchClient implements Runnable{
 		cmdline.add("-Xmx1g"); 
 		cmdline.add("-Djava.library.path="+mchomedir+System.getProperty("file.separator")
 										  +"common"+System.getProperty("file.separator")+"natives");
-		//cmdline.add("-Dhttp.proxyHost=betacraft.uk");
+		cmdline.add("-Dhttp.proxyHost=betacraft.uk");
         cmdline.add("-Djava.util.Arrays.useLegacyMergeSort=true");
-        //cmdline.add("-Dhttp.nonProxyHosts=\"api.betacraft.uk|files.betacraft.uk|checkip.amazonaws.com\"");
-        //cmdline.add("-Dhttp.proxyPort="+port);
+        cmdline.add("-Dhttp.nonProxyHosts=\"api.betacraft.uk|files.betacraft.uk|checkip.amazonaws.com\"");
+        cmdline.add("-Dhttp.proxyPort="+port);
         cmdline.add("-Duser.home="+mchomedir+System.getProperty("file.separator")+instfolder);
 		cmdline.add("-cp");
 		String extralibs = "";
@@ -98,14 +98,18 @@ public class LaunchClient implements Runnable{
 		String launchargs = launchstring;
 		launchargs = launchargs.replace("${auth_player_name}", MSAuthRoutine.mcprofilename);
 		launchargs = launchargs.replace("${auth_session}", MSAuthRoutine.mcaccesstoken);
-		launchargs = launchargs.replace("${game_directory}", mchomedir+System.getProperty("file.separator")+instfolder);
-		launchargs = launchargs.replace("${game_assets}", mchomedir+System.getProperty("file.separator")+"assets"+ (resversion.contains("legacy") ? (Paths.filesep + "virtual" + Paths.filesep + "legacy") : ""));
-		if (launchargs.contains("${version_name}")){
-			launchargs = launchargs.replace("${version_name}", "\"" + resversion + "\"");
-		}
 		//cmdline.add(launchargs);
 		String[] arguments = launchargs.split(" ");
 		for (String arg : arguments) {
+			if (arg.contains("${game_directory}")){
+				arg = arg.replace("${game_directory}", mchomedir+System.getProperty("file.separator")+instfolder);
+			}
+			if (arg.contains("${game_assets}")) {
+				arg = arg.replace("${game_assets}", mchomedir + Paths.filesep + (resversion.contains("legacy") ? ("assets"+ Paths.filesep + "virtual" + Paths.filesep + "legacy") : (instfolder + Paths.filesep + "resources")));
+			}
+			if (arg.contains("${version_name}")){
+				launchargs = launchargs.replace("${version_name}", "\"" + resversion + "\"");
+			}
 			cmdline.add(arg);
 		}
 		ProcessBuilder p = new ProcessBuilder(cmdline);

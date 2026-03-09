@@ -20,7 +20,7 @@ public class GetResources {
 	static String assetIndexString = "";
 	
 	@SuppressWarnings("resource")
-	public static void download(String assetIndexUrl, String resourceDir) {
+	public static void download(String assetIndexUrl, String resourceDir, String instfolder) {
 		HttpClient client = new HttpClient();
 		GetMethod get = new GetMethod(assetIndexUrl);
 		try {
@@ -73,15 +73,20 @@ public class GetResources {
 			 if (fileName.contains("icons")) {
 				 Downloader.getUrl(assetUrl, Paths.basepath() + Paths.filesep + "assets" + Paths.filesep + fileName, hash);
 			 }
-			 if (LaunchClient.resversion.contentEquals("legacy")) {
+			 //if (LaunchClient.resversion.contentEquals("legacy")) {
 				 Downloader.getUrl(assetUrl, resourceDir + Paths.filesep + "objects" + Paths.filesep + hash.substring(0, 2) + Paths.filesep + hash, hash);
 				 File fs = new File(resourceDir + Paths.filesep + "objects" + Paths.filesep + hash.substring(0, 2) + Paths.filesep + hash);
-				 File fd = new File(resourceDir + Paths.filesep + "virtual" + Paths.filesep + "legacy" + Paths.filesep + fileName);
+				 File fd = null;
+				 if (LaunchClient.resversion.contentEquals("legacy")) {
+					 fd = new File(resourceDir + Paths.filesep + "virtual" + Paths.filesep + "legacy" + Paths.filesep + fileName);
+				 } else {
+					 fd = new File(instfolder + Paths.filesep + "resources" + Paths.filesep + fileName);
+				 }
+				 System.out.println("Copying file from " + fs.getAbsolutePath() + " to " + fd.getAbsolutePath());
 				 fd.getParentFile().mkdirs();
 				 try {
 					 BufferedInputStream in = new BufferedInputStream(new FileInputStream(fs));
-					 BufferedOutputStream out;
-					 out = new BufferedOutputStream(new FileOutputStream(fd));
+					 BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(fd));
 					 byte[] buffer = new byte[1024];
 					 int lengthRead;
 					 while ((lengthRead = in.read(buffer)) > 0) {
@@ -97,9 +102,9 @@ public class GetResources {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			 } else {
-				 Downloader.getUrl(assetUrl, resourceDir + Paths.filesep + fileName, hash);
-			 }
+			 //} else {
+				// Downloader.getUrl(assetUrl, resourceDir + Paths.filesep + fileName, hash);
+			//}
 		}
 	}
 }
