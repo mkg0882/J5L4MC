@@ -23,7 +23,6 @@ public class InstanceEditor extends JFrame
 	private static final long serialVersionUID = 1102844236372348645L;
 	private static Label instnamelbl = new Label("Instance Name:");
 	private static TextField instname = new TextField();
-	//private static Label jarpathlbl = new Label("Minecraft JAR Path:");
 	private static TextField jarpath = new TextField();
 	private static Label launchargslbl = new Label("Java Launch Arguments:");
 	private static TextField launchargs = new TextField();
@@ -91,7 +90,6 @@ public class InstanceEditor extends JFrame
 			versionlist.addItem(currentItem);
 			int lastSelection = versionlist.getItemCount()-1;
 			if (!isNew){
-				//System.out.println(ve.id + " : " + ie.entry.version);
 				if (ie.entry.version.contentEquals(currentItem)){
 					versionlist.setSelectedIndex(lastSelection);
 				}
@@ -162,7 +160,6 @@ public class InstanceEditor extends JFrame
 	}
 
 	public void windowClosing(WindowEvent e) {
-		// TODO Auto-generated method stub
 		savebtn.removeActionListener(this);
 		cancelbtn.removeActionListener(this);
 		customchk.removeItemListener(this);
@@ -206,41 +203,22 @@ public class InstanceEditor extends JFrame
 			entry.folder = instname.getText();
 			entry.launchargs = launchargs.getText();
 			instance.entry = entry;
-//			InstanceList il = null;
-//			try {
-//				File frf = new File(Paths.instancelistpath);
-//				if (frf.exists()) {
-//					FileReader entriesfile = new FileReader(frf);
-//					Gson gson = new Gson();
-//					il = gson.fromJson(entriesfile, InstanceList.class);
-//				} else {
-//					il = new InstanceList();
-//					il.entries = new ArrayList<InstanceEntry>();
-//					il.lastselection = 0;
-//				}
-//				il.entries.add(instance);
-				InstanceList ilocal = new InstanceList();
-				if (Launcher.il.entries != null){
-					ilocal.entries = Launcher.il.entries;
-				} else {
-					ilocal.entries = new ArrayList<InstanceEntry>();
-				}
-			    System.out.println(Launcher.il.entries);
-			    if (!isNew){
-			    	ilocal.entries.remove(ilIndex);
-			    	ilocal.entries.add(ilIndex, instance);
-			    }
-			    else {
-			    	ilocal.entries.add(instance);
-			    	Launcher.instancelist.addItem(instance.name + " ("+instance.entry.version+")");
-			    }
-				Launcher.il = ilocal;
-				
-//			} catch (FileNotFoundException ex) {
-//				System.out.println("ERROR: Entries list file "+ Paths.instancelistpath +" not found!");
-//				ex.printStackTrace();
-//				return;
-//			}
+			InstanceList ilocal = new InstanceList();
+			if (Launcher.il.entries != null){
+				ilocal.entries = Launcher.il.entries;
+			} else {
+				ilocal.entries = new ArrayList<InstanceEntry>();
+			}
+			System.out.println(Launcher.il.entries);
+			if (!isNew){
+				ilocal.entries.remove(ilIndex);
+				ilocal.entries.add(ilIndex, instance);
+			}
+			else {
+				ilocal.entries.add(instance);
+				Launcher.instancelist.addItem(instance.name + " ("+instance.entry.version+")");
+			}
+			Launcher.il = ilocal;
 			FileWriter entriesfile = null;
 			try {
 				entriesfile = new FileWriter(Paths.instancelistpath);
