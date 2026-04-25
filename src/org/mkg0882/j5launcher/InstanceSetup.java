@@ -51,7 +51,6 @@ public class InstanceSetup {
 	static String resourceIndexUrl = "";
 	static String mainClass = "";
 	
-	@SuppressWarnings("resource")
 	public static ArrayList<String> create(String version, String folder){
 		File instancedir = new File(Paths.basepath() +"/"+folder);
 		if (!instancedir.exists()) {

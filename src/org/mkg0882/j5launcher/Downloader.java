@@ -22,7 +22,6 @@ public class Downloader {
 			File f = new File(path);
 			boolean skip = false;
 			if (f.exists() && (sha1 != null)) {
-				@SuppressWarnings("resource")
 				final FileInputStream fi = new FileInputStream(f);
 				FileChannel fc = fi.getChannel();
 				MessageDigest md = MessageDigest.getInstance("SHA");
@@ -64,7 +63,6 @@ public class Downloader {
 				fo.getFD().sync();
 				fo.close();
 				if (f.exists() && (sha1 != null)) {
-					@SuppressWarnings("resource")
 					final FileInputStream fi = new FileInputStream(f);
 					FileChannel fc = fi.getChannel();
 					MessageDigest md = MessageDigest.getInstance("SHA");

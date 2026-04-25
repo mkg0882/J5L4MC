@@ -19,7 +19,6 @@ import com.google.gson.JsonObject;
 public class GetResources {
 	static String assetIndexString = "";
 	
-	@SuppressWarnings("resource")
 	public static void download(String assetIndexUrl, String resourceDir, String instfolder) {
 		HttpClient client = new HttpClient();
 		GetMethod get = new GetMethod(assetIndexUrl);

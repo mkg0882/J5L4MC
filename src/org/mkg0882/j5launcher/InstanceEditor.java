@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 import org.mkg0882.j5launcher.json.InstanceEntry;
@@ -217,7 +219,13 @@ public class InstanceEditor extends JFrame
 //					il.lastselection = 0;
 //				}
 //				il.entries.add(instance);
-			    InstanceList ilocal = Launcher.il;
+				InstanceList ilocal = new InstanceList();
+				if (Launcher.il.entries != null){
+					ilocal.entries = Launcher.il.entries;
+				} else {
+					ilocal.entries = new ArrayList<InstanceEntry>();
+				}
+			    System.out.println(Launcher.il.entries);
 			    if (!isNew){
 			    	ilocal.entries.remove(ilIndex);
 			    	ilocal.entries.add(ilIndex, instance);

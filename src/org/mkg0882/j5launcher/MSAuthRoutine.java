@@ -5,11 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-
 import org.mkg0882.j5launcher.json.AuthTokenResponse;
 import org.mkg0882.j5launcher.json.DeviceTokenResponse;
 import org.mkg0882.j5launcher.json.MCAuthResponse;

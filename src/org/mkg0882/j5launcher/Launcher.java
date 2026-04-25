@@ -8,12 +8,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.String;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
-
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -53,24 +47,11 @@ public class Launcher extends JFrame
 	private FileWriter f2;
 	private static FileReader configread;
 	private static FileWriter configwrite;
-	//static InstanceEditor ie = null;
 	
 	public static void main(String[] args) {
 		playbtn.setEnabled(false);
 		profname.setText("Please wait...");
 		ConfigStore config = new ConfigStore();
-		//String testdate = "2025-12-11T21:41:04.0176564Z";
-		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-		//sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-		//try {
-			//Date dt = sdf.parse(testdate);
-			//Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-			//cal.setTime(dt);
-			//System.out.println(cal.getTimeInMillis());
-		//} catch (ParseException e) {
-			// TODO Auto-generated catch block
-		//	e.printStackTrace();
-		//}
 		try {
 			configread = new FileReader(Paths.configpath);
 			Gson gson = new Gson();
