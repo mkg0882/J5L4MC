@@ -30,6 +30,7 @@
 
 package org.mkg0882.j5launcher;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -62,11 +63,16 @@ public class SimpleSSLTestProtocolSocketFactory implements SecureProtocolSocketF
 		Security.insertProviderAt(new BouncyCastleProvider(), 1);
 		Security.insertProviderAt(new BouncyCastleJsseProvider(), 2);
         try {
+        	KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+        	FileInputStream fis = new FileInputStream("security/cacerts");
+        	ks.load(fis, null);
+        	fis.close();
+        	
 			SSLContext sslcontext = SSLContext.getInstance("TLSv1.2", "BCJSSE");
 			
 			TrustManagerFactory tmf = TrustManagerFactory.getInstance("PKIX", "BCJSSE");
 			// Using null here initializes the TMF with the default trust store.
-			tmf.init((KeyStore) null);
+			tmf.init((KeyStore) ks);
 
 			// Get hold of the default trust manager
 			X509TrustManager trustmanager = null;
