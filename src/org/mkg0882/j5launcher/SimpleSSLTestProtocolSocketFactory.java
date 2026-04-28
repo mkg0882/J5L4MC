@@ -30,8 +30,8 @@
 
 package org.mkg0882.j5launcher;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -64,9 +64,9 @@ public class SimpleSSLTestProtocolSocketFactory implements SecureProtocolSocketF
 		Security.insertProviderAt(new BouncyCastleJsseProvider(), 2);
         try {
         	KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
-        	FileInputStream fis = new FileInputStream("security/cacerts");
-        	ks.load(fis, null);
-        	fis.close();
+        	InputStream is = SimpleSSLTestProtocolSocketFactory.class.getResourceAsStream("cacerts");
+        	ks.load(is, null);
+        	is.close();
         	
 			SSLContext sslcontext = SSLContext.getInstance("TLSv1.2", "BCJSSE");
 			
