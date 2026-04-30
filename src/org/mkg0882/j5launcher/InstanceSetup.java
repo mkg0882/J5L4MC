@@ -100,7 +100,7 @@ public class InstanceSetup {
 							if (le.name.contains("net.minecraft:launchwrapper")) {
 								System.out.println(System.getProperty("java.version"));
 								if (System.getProperty("java.version").startsWith("1.") && (Integer.parseInt(System.getProperty("java.version").split("\\.")[1]) <= 5)){
-									launchwrapperUrl="placeholder"; //TODO Find somewhere to host the Java 5 launch wrapper
+									launchwrapperUrl="https://github.com/mkg0882/J5L4MC/raw/refs/heads/main/lib/launchwrapper.jar"; 
 									launchwrapperSha1="101e616a25095d3ac012534b30d9f6ad1bb485b6";
 								} else {
 									launchwrapperUrl = le.downloads.artifact.url;
