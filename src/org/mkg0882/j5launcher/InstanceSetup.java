@@ -1,5 +1,13 @@
 package org.mkg0882.j5launcher;
 
+import java.awt.GridLayout;
+import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,6 +21,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -24,7 +36,15 @@ import org.mkg0882.j5launcher.json.VersionManifest;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
-public class InstanceSetup {
+public class InstanceSetup extends JFrame
+						   implements WindowListener, ActionListener, ItemListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8555891555837521209L;
+	static InstanceSetup f = new InstanceSetup();
+	static GridLayout column = new GridLayout();
+	static JPanel basepanel = new JPanel(column);
 	static VersionManifest vm = new VersionManifest();
 	static String clientUrl = "";
 	static String clientSha1 = "";
@@ -50,8 +70,28 @@ public class InstanceSetup {
 	static ArrayList<String> liblist = new ArrayList<String>();
 	static String resourceIndexUrl = "";
 	static String mainClass = "";
+	static Label actionlbl = new Label();
+	static Label sublbl = new Label();
+	
+	public void showWindow(){
+		f.setSize(500, 150);
+		f.add(basepanel);
+		f.setTitle("J5L4MC");
+		f.addWindowListener(this);
+		f.setContentPane(basepanel);
+		column.setColumns(1);
+		column.setRows(2);
+		actionlbl.setAlignment(Label.CENTER);
+		sublbl.setAlignment(Label.CENTER);
+		basepanel.add(actionlbl);
+		basepanel.add(sublbl);
+		basepanel.setVisible(true);
+		f.setVisible(true);
+	}
 	
 	public static ArrayList<String> create(String version, String folder){
+		f.showWindow();
+		actionlbl.setText("Fetching/Reading Version Info...");
 		File instancedir = new File(Paths.basepath() +"/"+folder);
 		if (!instancedir.exists()) {
 			instancedir.mkdirs();
@@ -190,50 +230,65 @@ public class InstanceSetup {
 					}
 					LaunchClient.resversion = vi.assetIndex.id;
 					//if (vi.assetIndex.id.contentEquals("legacy")) {
+					sublbl.setText("");
+					actionlbl.setText("Downloading/Verifying resources...");
 						GetResources.download(resourceIndexUrl, Paths.basepath()+Paths.filesep+"assets", instancedir.getAbsolutePath());
 					//} else if (vi.assetIndex.id.contentEquals("pre-1.6")) {
 					//	GetResources.download(resourceIndexUrl, instancedir+Paths.filesep+"resources");
 					//}
+					InstanceSetup.actionlbl.setText("Downloading/Verifying Client...");
+					Downloader.getUrl(clientUrl, Paths.basepath()+Paths.filesep+"versions"+Paths.filesep+version+Paths.filesep+"minecraft.jar", clientSha1);
 					if (launchwrapperUrl.length()>0) {
 						System.out.println(launchwrapperUrl);
+						InstanceSetup.actionlbl.setText("Downloading/Verifying Launch Wrapper...");
 						Downloader.getUrl(launchwrapperUrl, Paths.basepath()+Paths.filesep+"versions"+Paths.filesep+version+Paths.filesep+"launchwrapper.jar", launchwrapperSha1);
 					}
-					Downloader.getUrl(clientUrl, Paths.basepath()+Paths.filesep+"versions"+Paths.filesep+version+Paths.filesep+"minecraft.jar", clientSha1);
+					InstanceSetup.actionlbl.setText("Downloading/Verifying Additional Libraries...");
 					for (Map.Entry<String, String> entry : otherLibs.entrySet()) {
 						System.out.println(entry);
 						String name=entry.getKey().split("/")[(entry.getKey().split("/").length - 1)];
 						liblist.add(name);
+						sublbl.setText(name);
 						Downloader.getUrl(entry.getKey(), Paths.basepath()+Paths.filesep+"common"+Paths.filesep+name, entry.getValue());
 					}
 					if (cioUrl.length()>0) {
 						System.out.println(cioUrl);
+						sublbl.setText("commons-io.jar");
 						Downloader.getUrl(cioUrl, Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"commons-io.jar", cioSha1);
 					}
 					if (argoUrl.length()>0) {
 						System.out.println(argoUrl);
+						sublbl.setText("argo.jar");
 						Downloader.getUrl(argoUrl, Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"argo.jar", argoSha1);
 					}
 					if (guavaUrl.length()>0) {
 						System.out.println(guavaUrl);
+						sublbl.setText("guava.jar");
 						Downloader.getUrl(guavaUrl, Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"guava.jar", guavaSha1);
 					}
 					System.out.println(jinputUrl);
+					sublbl.setText("jinput.jar");
 					Downloader.getUrl(jinputUrl, Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"jinput.jar", jinputSha1);
 					System.out.println(lwjglUrl);
+					sublbl.setText("lwjgl.jar");
 					Downloader.getUrl(lwjglUrl, Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"lwjgl.jar", lwjglSha1);
 					System.out.println(lwjglUtilUrl);
+					sublbl.setText("lwjgl_util.jar");
 					Downloader.getUrl(lwjglUtilUrl, Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"lwjgl_util.jar", lwjglUtilSha1);
 					System.out.println(lnativesUrl);
+					sublbl.setText("lwjgl_natives.jar");
 					Downloader.getUrl(lnativesUrl, Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"natives"+Paths.filesep+"lwjgl_natives.jar", lnativesSha1);
 					System.out.println(jnativesUrl);
+					sublbl.setText("jinput_natives.jar");
 					Downloader.getUrl(jnativesUrl, Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"natives"+Paths.filesep+"jinput_natives.jar", jnativesSha1);
-					
+					actionlbl.setText("Extracting natives...");
 					String filepath = (Paths.basepath()+Paths.filesep+"common"+Paths.filesep+"natives"+Paths.filesep+"lwjgl_natives.jar");
 					System.out.println("Attempting to extract JAR: " + filepath);
 					File f = new File(filepath);
 					FileInputStream fis = new FileInputStream(f);
 					JarInputStream jis = new JarInputStream(fis);
 					JarEntry je = null;
+					sublbl.setText("lwjgl_natives.jar");
 					while ((je=jis.getNextJarEntry()) != null) {
 						if (je.isDirectory()) {
 							continue;
@@ -266,6 +321,7 @@ public class InstanceSetup {
 					fis = new FileInputStream(f);
 					jis = new JarInputStream(fis);
 					je = null;
+					sublbl.setText("jinput_natives.jar");
 					while ((je=jis.getNextJarEntry()) != null) {
 						if (je.isDirectory()) {
 							continue;
@@ -299,6 +355,54 @@ public class InstanceSetup {
 				}
 			}
 		}
+		sublbl.setText("");
+		actionlbl.setText("Launching game!");
+		f.dispose();
 		return liblist;
+	}
+
+	public void itemStateChanged(ItemEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowClosing(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

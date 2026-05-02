@@ -24,8 +24,8 @@ public class InstanceEditor extends JFrame
 	private static Label instnamelbl = new Label("Instance Name:");
 	private static TextField instname = new TextField();
 	private static TextField jarpath = new TextField();
-	private static Label launchargslbl = new Label("Java Launch Arguments:");
-	private static TextField launchargs = new TextField();
+	//private static Label launchargslbl = new Label("Java Launch Arguments:");
+	//private static TextField launchargs = new TextField();
 	private static Button savebtn = new Button("Save");
 	private static Button cancelbtn = new Button("Cancel");
 	private static Checkbox customchk = new Checkbox();
@@ -125,18 +125,18 @@ public class InstanceEditor extends JFrame
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		layout.setConstraints(jarpath, constraints);
 		
-		panel.add(launchargslbl);
-		launchargslbl.setAlignment(Label.RIGHT);
+		//panel.add(launchargslbl);
+		//launchargslbl.setAlignment(Label.RIGHT);
 		constraints.gridwidth = GridBagConstraints.LINE_START;
 		constraints.anchor = GridBagConstraints.EAST;
 		constraints.fill = GridBagConstraints.NONE;
-		layout.setConstraints(launchargslbl, constraints);
-		panel.add(launchargs);
-		launchargs.setColumns(24);
+		//layout.setConstraints(launchargslbl, constraints);
+		//panel.add(launchargs);
+		//launchargs.setColumns(24);
 		constraints.gridwidth = GridBagConstraints.REMAINDER;
 		constraints.anchor = GridBagConstraints.WEST;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
-		layout.setConstraints(launchargs, constraints);
+		//layout.setConstraints(launchargs, constraints);
 		
 		panel.add(savebtn);
 		savebtn.addActionListener(this);
@@ -201,7 +201,7 @@ public class InstanceEditor extends JFrame
 			entry.custom = customchk.getState();
 			entry.version = versionlist.getSelectedItem().toString();
 			entry.folder = instname.getText();
-			entry.launchargs = launchargs.getText();
+			//entry.launchargs = launchargs.getText();
 			instance.entry = entry;
 			InstanceList ilocal = new InstanceList();
 			if (Launcher.il.entries != null){

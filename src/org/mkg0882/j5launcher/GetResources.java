@@ -81,6 +81,7 @@ public class GetResources {
 				 } else {
 					 fd = new File(instfolder + Paths.filesep + "resources" + Paths.filesep + fileName);
 				 }
+				 InstanceSetup.sublbl.setText(fileName);
 				 System.out.println("Copying file from " + fs.getAbsolutePath() + " to " + fd.getAbsolutePath());
 				 fd.getParentFile().mkdirs();
 				 try {
